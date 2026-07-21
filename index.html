@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Submeter Calculator</title>
+
+    <!-- iOS Native App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Submeter Calc">
+
+    <!-- App Icon for iOS Home Screen & Favicon -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgd2lkdGg9IjY0Ij48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNiIgZmlsbD0iIzYzNjZmMSIvPjxwYXRoIGQ9Ik0zNiAxOEwyMCAzNmgxMmwtNCAyMCAxNi0xOEgzMmwiNC0yMHoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgd2lkdGg9IjY0Ij48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxMiIgZmlsbD0iIzYzNjZmMSIvPjxwYXRoIGQ9Ik0zNiAxOEwyMCAzNmgxMmwtNCAyMCAxNi0xOEgzMmwiNC0yMHoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=">
+
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --input-bg: #f8fafc;
+            --gradient-title: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #d946ef 100%);
+            --accent-purple: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --highlight-bg: #f5f3ff;
+            --result-border: #ddd6fe;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+            padding-top: env(safe-area-inset-top, 20px);
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            width: 100%;
+            max-width: 440px;
+            padding: 28px 24px 20px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-title);
+        }
+
+        .header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            background: var(--gradient-title);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .section-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent-purple);
+            margin-bottom: 12px;
+        }
+
+        .section-tag::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper span {
+            position: absolute;
+            left: 14px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px 12px 38px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background-color: var(--input-bg);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s ease;
+            -webkit-appearance: none;
+        }
+
+        input:focus {
+            border-color: var(--accent-purple);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 20px 0;
+        }
+
+        .result-box {
+            background-color: var(--highlight-bg);
+            border: 1px solid var(--result-border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-top: 20px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .result-row .value {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .result-row.total {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--result-border);
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .result-row.total .value {
+            background: var(--gradient-title);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.35rem;
+            font-weight: 800;
+        }
+
+        .app-footer {
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .app-footer span {
+            font-weight: 700;
+            color: var(--accent-purple);
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-card">
+    <div class="header">
+        <h1>Submeter Invoice Generator</h1>
+        <p>Instant Electricity Bill Allocation</p>
+    </div>
+
+    <div class="section-tag">1. Main Bill Summary</div>
+    
+    <div class="input-group">
+        <label for="netBill">Net Bill Payable Amount</label>
+        <div class="input-wrapper">
+            <span>₹</span>
+            <input type="number" id="netBill" value="56700" step="any" inputmode="decimal" oninput="calculate()">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label for="totalUnits">Main Meter Consumed Units</label>
+        <div class="input-wrapper">
+            <span>⚡</span>
+            <input type="number" id="totalUnits" value="6950.1" step="any" inputmode="decimal" oninput="calculate()">
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-tag">2. Submeter Readings</div>
+
+    <div class="input-group">
+        <label for="oldReading">OLD Submeter Reading (KWh)</label>
+        <div class="input-wrapper">
+            <span>📊</span>
+            <input type="number" id="oldReading" value="7921" step="any" inputmode="decimal" oninput="calculate()">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label for="newReading">NEW Submeter Reading (KWh)</label>
+        <div class="input-wrapper">
+            <span>📊</span>
+            <input type="number" id="newReading" value="10529" step="any" inputmode="decimal" oninput="calculate()">
+        </div>
+    </div>
+
+    <div class="result-box">
+        <div class="result-row">
+            <span>Cost Per Unit:</span>
+            <span class="value" id="costPerUnitDisplay">₹ 0.00</span>
+        </div>
+        <div class="result-row">
+            <span>Submeter Units Consumed:</span>
+            <span class="value" id="subUnitsDisplay">0 KWh</span>
+        </div>
+        <div class="result-row total">
+            <span>Amount To Pay:</span>
+            <span class="value" id="amountToPayDisplay">₹ 0.00</span>
+        </div>
+    </div>
+
+    <div class="app-footer">
+        © <span id="year"></span> | Built by <span>/\\/ Designz</span>
+    </div>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function calculate() {
+    let netBill = parseFloat(document.getElementById('netBill').value) || 0;
+    let totalUnits = parseFloat(document.getElementById('totalUnits').value) || 0;
+    let oldReading = parseFloat(document.getElementById('oldReading').value) || 0;
+    let newReading = parseFloat(document.getElementById('newReading').value) || 0;
+
+    let rawCostPerUnit = totalUnits > 0 ? (netBill / totalUnits) : 0;
+    let costPerUnit = Math.round(rawCostPerUnit * 100) / 100;
+
+    let subUnits = newReading - oldReading;
+    let amountToPay = subUnits * costPerUnit;
+
+    document.getElementById('costPerUnitDisplay').textContent = "₹ " + costPerUnit.toFixed(2);
+    
+    if (subUnits >= 0) {
+        document.getElementById('subUnitsDisplay').textContent = subUnits.toFixed(2) + " KWh";
+        document.getElementById('amountToPayDisplay').textContent = "₹ " + (amountToPay >= 0 ? amountToPay.toFixed(2) : "0.00");
+    } else {
+        document.getElementById('subUnitsDisplay').textContent = "Invalid (New < Old)";
+        document.getElementById('amountToPayDisplay').textContent = "₹ 0.00";
+    }
+}
+
+calculate();
+</script>
+
+</body>
+</html>
