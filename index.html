@@ -291,11 +291,33 @@
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Load saved values on startup
+function loadSavedValues() {
+    if (localStorage.getItem('netBill') !== null) {
+        document.getElementById('netBill').value = localStorage.getItem('netBill');
+    }
+    if (localStorage.getItem('totalUnits') !== null) {
+        document.getElementById('totalUnits').value = localStorage.getItem('totalUnits');
+    }
+    if (localStorage.getItem('oldReading') !== null) {
+        document.getElementById('oldReading').value = localStorage.getItem('oldReading');
+    }
+    if (localStorage.getItem('newReading') !== null) {
+        document.getElementById('newReading').value = localStorage.getItem('newReading');
+    }
+}
+
 function calculate() {
     let netBill = parseFloat(document.getElementById('netBill').value) || 0;
     let totalUnits = parseFloat(document.getElementById('totalUnits').value) || 0;
     let oldReading = parseFloat(document.getElementById('oldReading').value) || 0;
     let newReading = parseFloat(document.getElementById('newReading').value) || 0;
+
+    // Save inputs automatically to device storage
+    localStorage.setItem('netBill', document.getElementById('netBill').value);
+    localStorage.setItem('totalUnits', document.getElementById('totalUnits').value);
+    localStorage.setItem('oldReading', document.getElementById('oldReading').value);
+    localStorage.setItem('newReading', document.getElementById('newReading').value);
 
     let rawCostPerUnit = totalUnits > 0 ? (netBill / totalUnits) : 0;
     let costPerUnit = Math.round(rawCostPerUnit * 100) / 100;
@@ -314,6 +336,8 @@ function calculate() {
     }
 }
 
+// Initial Run
+loadSavedValues();
 calculate();
 </script>
 
