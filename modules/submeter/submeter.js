@@ -14,6 +14,7 @@ export async function initApp() {
     renderUIFromJSON(config);
     initThemeManager();
     initCalculator(config);
+    initActions();
 }
 
 function renderUIFromJSON(config) {
@@ -157,6 +158,52 @@ function initCalculator(config) {
             if (data.newReading !== undefined) newReadingInput.value = data.newReading;
         } catch (e) {
             console.error('Failed to parse saved submeter data', e);
+        }
+    }
+}
+
+function initActions() {
+    const printBtn = document.getElementById('btnPrint');
+    const shareBtn = document.getElementById('btnShare');
+
+    printBtn?.addEventListener('click', () => {
+        window.print();
+    });
+
+    shareBtn?.addEventListener('click', async () => {
+        const printableArea = document.getElementById('printableArea');
+        
+        if (navigator.share && window.html2canvas) {
+            try {
+                const canvas = await html2canvas(printableArea);
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'submeter-bill-summary.png', { type: 'image/png' });
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Submeter Electricity Summary',
+                            text: 'Here is the submeter electricity calculation.'
+                        });
+                    } else {
+                        fallbackTextShare();
+                    }
+                });
+            } catch (err) {
+                console.error('Share failed', err);
+                fallbackTextShare();
+            }
+        } else {
+            fallbackTextShare();
+        }
+    });
+
+    function fallbackTextShare() {
+        const text = `Submeter Bill Summary:\nTotal Payable: ${document.getElementById('subAmountResult').textContent}`;
+        if (navigator.share) {
+            navigator.share({ title: 'Submeter Bill', text: text });
+        } else {
+            navigator.clipboard.writeText(text);
+            alert('Summary copied to clipboard!');
         }
     }
 }
