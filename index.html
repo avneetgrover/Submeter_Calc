@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submeter Calculator</title>
     <link rel="stylesheet" href="css/styles.css">
+    <!-- html2canvas for capturing UI as Image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
-    <div class="app-container">
-        <!-- App Header & Theme Toggle -->
+    <div class="app-container" id="printableArea">
+        <!-- App Header -->
         <header class="app-header">
-            <div>
+            <div class="brand-info">
                 <h1 id="appTitle">Loading...</h1>
                 <p id="appSubtitle"></p>
             </div>
@@ -75,6 +77,17 @@
             </div>
 
         </div>
+
+        <!-- Actions Row (Print & Mobile Share) -->
+        <div class="action-bar no-print">
+            <button id="btnPrint" class="btn-action">🖨️ Print / Save PDF</button>
+            <button id="btnShare" class="btn-action mobile-only">📤 Share Summary</button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            Electric Submeter Calculator © 2026. Built by /\/ Designz.
+        </footer>
     </div>
 
     <!-- Application Initialization -->
