@@ -1,0 +1,227 @@
+/* LIGHT THEME PALETTE */
+:root[data-theme="light"] {
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    --accent-blue: #2563eb;
+    --accent-bg: #eff6ff;
+    --hero-bg: #1d4ed8;
+    --hero-text: #ffffff;
+    --hero-subtext: #93c5fd;
+    --error-bg: #fef2f2;
+    --error-text: #dc2626;
+}
+
+/* DARK THEME PALETTE */
+:root[data-theme="dark"] {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-bg: rgba(30, 58, 138, 0.3);
+    --hero-bg: #2563eb;
+    --hero-text: #ffffff;
+    --hero-subtext: #dbeafe;
+    --error-bg: rgba(239, 68, 68, 0.15);
+    --error-text: #f87171;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 850px;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.app-header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.app-header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.theme-select {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    outline: none;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.25rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-bottom: 1.25rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.input-group input {
+    padding: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--accent-blue);
+}
+
+.btn-reset {
+    width: 100%;
+    padding: 0.65rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.btn-reset:hover {
+    background: var(--bg-color);
+}
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.stat-box {
+    background: var(--accent-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+}
+
+.stat-box span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.stat-box strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    color: var(--text-primary);
+}
+
+.hero-box {
+    background: var(--hero-bg);
+    color: var(--hero-text);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-top: auto;
+}
+
+.hero-box span {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+.hero-box h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0.3rem 0;
+}
+
+.hero-box small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--hero-subtext);
+}
+
+.error-banner {
+    background: var(--error-bg);
+    color: var(--error-text);
+    font-size: 0.85rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+}
+
+.hidden { display: none; }
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

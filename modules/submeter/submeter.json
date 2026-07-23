@@ -1,0 +1,31 @@
+{
+  "title": "Electric Submeter Calculator",
+  "subtitle": "Calculate submeter usage & split electricity bills in real time",
+  "currencySymbol": "₹",
+  "themeOptions": {
+    "system": "💻 System",
+    "light": "☀️ Light",
+    "dark": "🌙 Dark"
+  },
+  "labels": {
+    "formSectionTitle": "⚡ Bill & Readings",
+    "summarySectionTitle": "📊 Summary",
+    "netBill": "Net Bill Amount",
+    "mainUnits": "Main Meter Units (kWh)",
+    "oldReading": "Submeter Old Reading",
+    "newReading": "Submeter New Reading",
+    "ratePerUnit": "Cost Per Unit",
+    "submeterUnits": "Submeter Consumption",
+    "totalPayable": "TOTAL PAYABLE",
+    "resetBtn": "Reset All Inputs"
+  },
+  "placeholders": {
+    "netBill": "e.g. 4500",
+    "mainUnits": "e.g. 500",
+    "oldReading": "e.g. 1200",
+    "newReading": "e.g. 1350"
+  },
+  "errorMessages": {
+    "invalidReading": "Invalid: New Reading cannot be less than Old Reading."
+  }
+}
