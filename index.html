@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submeter Calculator</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><path d='M13 2L3 14h7v8l10-12h-7z'/></svg>">
     <link rel="stylesheet" href="css/styles.css">
     <!-- html2canvas for capturing UI as Image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -11,11 +13,19 @@
 <body>
 
     <div class="app-container" id="printableArea">
-        <!-- App Header -->
+        <!-- Contrast Header -->
         <header class="app-header">
             <div class="brand-info">
-                <h1 id="appTitle">Loading...</h1>
-                <p id="appSubtitle"></p>
+                <div class="logo-container">
+                    <!-- Embedded SVG Logo -->
+                    <svg class="app-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13 2L3 14h7v8l10-12h-7z"/>
+                    </svg>
+                    <div>
+                        <h1 id="appTitle">Loading...</h1>
+                        <p id="appSubtitle"></p>
+                    </div>
+                </div>
             </div>
             <select id="themeSelect" class="theme-select"></select>
         </header>
@@ -59,14 +69,16 @@
             <div class="card summary-container">
                 <h2 id="lblSummaryTitle" class="card-title">📊 Summary</h2>
 
-                <div class="stat-box">
-                    <span id="lblRatePerUnit"></span>
-                    <strong id="subRateResult">₹ 0.00 / kWh</strong>
-                </div>
+                <div class="summary-stats-wrapper">
+                    <div class="stat-box">
+                        <span id="lblRatePerUnit"></span>
+                        <strong id="subRateResult">₹ 0.00 / kWh</strong>
+                    </div>
 
-                <div class="stat-box">
-                    <span id="lblSubmeterUnits"></span>
-                    <strong id="subUnitsResult">0 kWh</strong>
+                    <div class="stat-box">
+                        <span id="lblSubmeterUnits"></span>
+                        <strong id="subUnitsResult">0 kWh</strong>
+                    </div>
                 </div>
 
                 <div class="hero-box">
@@ -84,7 +96,7 @@
             <button id="btnShare" class="btn-action mobile-only">📤 Share Summary</button>
         </div>
 
-        <!-- Footer -->
+        <!-- Contrast Footer -->
         <footer class="app-footer">
             Electric Submeter Calculator © 2026. Built by /\/ Designz.
         </footer>
