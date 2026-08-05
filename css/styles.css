@@ -1,5 +1,6 @@
 /* LIGHT THEME PALETTE */
-:root[data-theme="light"] {
+:root[data-theme="light"],
+body[data-theme="light"] {
     --bg-color: #f8fafc;
     --card-bg: #ffffff;
     --header-bg: #e2e8f0;
@@ -21,7 +22,8 @@
 }
 
 /* DARK THEME PALETTE */
-:root[data-theme="dark"] {
+:root[data-theme="dark"],
+body[data-theme="dark"] {
     --bg-color: #0f172a;
     --card-bg: #1e293b;
     --header-bg: #020617;
@@ -44,7 +46,8 @@
 
 /* SYSTEM THEME AUTOMATIC DETECTION */
 @media (prefers-color-scheme: dark) {
-    :root[data-theme="system"] {
+    :root[data-theme="system"],
+    body[data-theme="system"] {
         --bg-color: #0f172a;
         --card-bg: #1e293b;
         --header-bg: #020617;
@@ -67,7 +70,8 @@
 }
 
 @media (prefers-color-scheme: light) {
-    :root[data-theme="system"] {
+    :root[data-theme="system"],
+    body[data-theme="system"] {
         --bg-color: #f8fafc;
         --card-bg: #ffffff;
         --header-bg: #e2e8f0;
@@ -159,22 +163,25 @@ body {
     display: grid;
     grid-template-columns: 1fr 400px;
     gap: 1.75rem;
-    align-items: start;
+    align-items: stretch; /* Stretches both cards to match equal height */
 }
 
 .card {
     background: var(--card-bg);
     border-radius: 20px;
     border: 1px solid var(--border-color);
-    padding: 1.75rem;
+    padding: 2.25rem 2rem; /* Expanded vertical & horizontal padding */
     box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card-title {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--accent-blue);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
@@ -183,8 +190,8 @@ body {
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .input-group {
@@ -193,19 +200,19 @@ body {
 }
 
 .input-group label {
-    font-size: 0.825rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-muted);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
 }
 
 .input-group input {
-    padding: 0.85rem 1rem;
+    padding: 1rem 1.15rem;
     border-radius: 12px;
     border: 1px solid var(--border-color);
     background: var(--bg-color);
     color: var(--text-primary);
-    font-size: 0.95rem;
+    font-size: 1rem;
     outline: none;
     transition: border-color 0.2s ease;
 }
@@ -216,22 +223,36 @@ body {
 
 .btn-reset {
     width: 100%;
-    padding: 0.85rem;
+    padding: 0.95rem;
     background: transparent;
     border: 1px dashed var(--border-color);
     color: var(--text-muted);
     border-radius: 12px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
+    margin-top: auto;
 }
 
-/* RECEIPT/SUMMARY COLUMN STYLING */
+/* AUTHENTIC RECEIPT SUMMARY COLUMN STYLING */
 .summary-container {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     width: 100%;
+    border: 2px dashed var(--border-color);
+    border-radius: 20px;
+    background: var(--receipt-bg);
+}
+
+.summary-container .card-title {
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px dashed var(--border-color);
+    margin-bottom: 0.5rem;
 }
 
 .summary-stats-wrapper {
@@ -241,13 +262,15 @@ body {
 }
 
 .stat-box {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 1rem 1.15rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dotted var(--border-color);
+    border-radius: 0;
+    padding: 0.75rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
 .stat-box span {
@@ -261,6 +284,7 @@ body {
     font-size: 1.15rem;
     color: var(--text-primary);
     font-weight: 700;
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
 .hero-box {
@@ -271,20 +295,23 @@ body {
     text-align: center;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-card);
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
 .hero-box span {
     font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    opacity: 0.85;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    opacity: 0.9;
 }
 
 .hero-box h2 {
-    font-size: 2.1rem;
+    font-size: 2.2rem;
     font-weight: 800;
-    margin: 0.2rem 0;
+    margin: 0.25rem 0;
     letter-spacing: -0.02em;
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
 .hero-box small {
