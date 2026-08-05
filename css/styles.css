@@ -234,16 +234,34 @@ body {
     margin-top: auto;
 }
 
-/* AUTHENTIC CHECKOUT RECEIPT / CHALLAN STYLING */
+/* GLASSMORPHISM / GLASS FINISH RECEIPT STYLING */
 .summary-container {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     width: 100%;
-    border: 2px dashed var(--border-color);
+    
+    /* Frosted Glass Background & Blur */
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
     border-radius: 20px;
-    background: var(--receipt-bg);
     padding: 1.75rem 1.5rem;
+    
+    /* Ambient Light Reflection Shadow */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12),
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+}
+
+/* Dark Mode Glass Override */
+[data-theme="dark"] .summary-container {
+    background: rgba(30, 41, 59, 0.55) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37),
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .receipt-header {
