@@ -3,9 +3,9 @@
   "subtitle": "Calculate submeter usage & split electricity bills in real time",
   "currencySymbol": "₹",
   "themeOptions": {
-    "system": "💻 System",
-    "light": "☀️ Light",
-    "dark": "🌙 Dark"
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
   },
   "labels": {
     "formSectionTitle": "⚡ Bill & Readings",
