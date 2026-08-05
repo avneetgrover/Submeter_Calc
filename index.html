@@ -8,7 +8,7 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
@@ -50,7 +50,7 @@
             
             <!-- Input Panel (Left Column) -->
             <div class="card">
-                <h2 id="lblFormTitle" class="card-title">⚡ Bill & Readings</h2>
+                <h2 id="lblFormTitle" class="card-title">⚡ BILL & READINGS</h2>
                 
                 <div class="form-grid">
                     <div class="input-group">
@@ -76,34 +76,64 @@
 
                 <button id="clearDataBtn" class="btn-reset">Reset All Inputs</button>
             </div>
-    
-            <!-- Real-time Summary Side Panel (Right Column) -->
-            <div class="card summary-container" id="printableArea">
-                <h2 id="lblSummaryTitle" class="card-title receipt-title">RECEIPT SUMMARY</h2>
 
-                <div class="summary-stats-wrapper">
+            <!-- Real-time Summary & Checkout Receipt Panel (Right Column) -->
+            <div class="card summary-container" id="printableArea">
+                
+                <!-- Receipt Header -->
+                <div class="receipt-header">
+                    <h2 id="lblSummaryTitle" class="card-title receipt-title">⚡ ELECTRICITY CHALLAN</h2>
+                    <p class="receipt-subtitle">Submeter Settlement Receipt</p>
+                </div>
+
+                <!-- Itemized Line Items (Inputs + Calculated Values) -->
+                <div class="receipt-breakdown">
                     <div class="stat-box">
+                        <span>Net Bill Amount</span>
+                        <strong id="receiptNetBill">₹ 0.00</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span>Main Meter Units</span>
+                        <strong id="receiptMainUnits">0 kWh</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span>Old Submeter Reading</span>
+                        <strong id="receiptOldReading">0</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span>New Submeter Reading</span>
+                        <strong id="receiptNewReading">0</strong>
+                    </div>
+                    <div class="stat-box highlight-line">
                         <span id="lblRatePerUnit">Cost Per Unit</span>
                         <strong id="subRateResult">₹ 0.00 / kWh</strong>
-                </div>
-                <div class="stat-box">
-                    <span id="lblSubmeterUnits">Submeter Consumption</span>
-                    <strong id="subUnitsResult">0 kWh</strong>
-                </div>
+                    </div>
+                    <div class="stat-box highlight-line">
+                        <span id="lblSubmeterUnits">Submeter Consumption</span>
+                        <strong id="subUnitsResult">0 kWh</strong>
+                    </div>
                 </div>
 
+                <!-- Final Payable Hero Box -->
                 <div class="hero-box">
-                    <span id="lblTotalPayable">TOTAL PAYABLE</span>
+                    <span id="lblTotalPayable">TOTAL AMOUNT DUE</span>
                     <h2 id="subAmountResult">₹ 0.00</h2>
                     <small>Calculated in real-time</small>
                 </div>
 
-                <!-- Action Buttons (Inside Summary Column) -->
+                <!-- Receipt Footer Info -->
+                <div class="receipt-footer">
+                    <small>Thank you for keeping readings up to date!</small>
+                </div>
+
+                <!-- Action Buttons (Hidden during Print / Share Capture) -->
                 <div class="action-bar no-print">
                     <button id="btnPrint" class="btn-action">🖨️ Print / Save PDF</button>
                     <button id="btnShare" class="btn-action">📤 Share Summary</button>
                 </div>
-                </div>
+            </div>
+
+        </div>
 
         <!-- Contrast Footer -->
         <footer class="app-footer">
