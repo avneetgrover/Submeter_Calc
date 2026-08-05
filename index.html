@@ -1,33 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="system">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submeter Calculator</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><path d='M13 2L3 14h7v8l10-12h-7z'/></svg>">
+    <title>Electric Submeter Calculator</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
-    <!-- html2canvas for capturing UI as Image -->
+
+    <!-- html2canvas for canvas image export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
-    <div class="app-container" id="printableArea">
-        <!-- Contrast Header -->
+    <div class="app-container">
+        
+        <!-- Application Header -->
         <header class="app-header">
-            <div class="brand-info">
-                <div class="logo-container">
-                    <!-- Embedded SVG Logo -->
-                    <svg class="app-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M13 2L3 14h7v8l10-12h-7z"/>
-                    </svg>
-                    <div>
-                        <h1 id="appTitle">Loading...</h1>
-                        <p id="appSubtitle"></p>
-                    </div>
+            <div class="logo-container">
+                <svg class="app-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <div>
+                    <h1 id="appTitle">Electric Submeter Calculator</h1>
+                    <p id="appSubTitle">Calculate submeter usage & split electricity bills in real time</p>
                 </div>
             </div>
-            <select id="themeSelect" class="theme-select"></select>
+
+            <!-- Theme Switcher -->
+            <div class="theme-switcher">
+                <select id="themeSelect" class="theme-select" aria-label="Select Theme">
+                    <option value="light">☀️ Light</option>
+                    <option value="system">💻 System</option>
+                    <option value="dark" selected>🌙 Dark</option>
+                </select>
+            </div>
         </header>
 
         <!-- Dynamic Validation Error Container -->
@@ -36,70 +48,70 @@
         <!-- Split Dashboard Layout -->
         <div class="dashboard-grid">
             
-            <!-- Input Panel -->
+            <!-- Input Panel (Left Column) -->
             <div class="card">
                 <h2 id="lblFormTitle" class="card-title">⚡ Bill & Readings</h2>
                 
                 <div class="form-grid">
                     <div class="input-group">
-                        <label id="lblNetBill" for="subNetBill"></label>
-                        <input type="number" id="subNetBill" step="any">
+                        <label id="lblNetBill" for="subNetBill">Net Bill Amount (₹)</label>
+                        <input type="number" id="subNetBill" step="any" placeholder="e.g. 4500">
                     </div>
 
                     <div class="input-group">
-                        <label id="lblMainUnits" for="subMainUnits"></label>
-                        <input type="number" id="subMainUnits" step="any">
+                        <label id="lblMainUnits" for="subMainUnits">Main Meter Units (kWh)</label>
+                        <input type="number" id="subMainUnits" step="any" placeholder="e.g. 500">
                     </div>
 
                     <div class="input-group">
-                        <label id="lblOldReading" for="subOldReading"></label>
-                        <input type="number" id="subOldReading" step="any">
+                        <label id="lblOldReading" for="subOldReading">Submeter Old Reading</label>
+                        <input type="number" id="subOldReading" step="any" placeholder="e.g. 1200">
                     </div>
 
                     <div class="input-group">
-                        <label id="lblNewReading" for="subNewReading"></label>
-                        <input type="number" id="subNewReading" step="any">
+                        <label id="lblNewReading" for="subNewReading">Submeter New Reading</label>
+                        <input type="number" id="subNewReading" step="any" placeholder="e.g. 1350">
                     </div>
                 </div>
 
-                <button id="clearDataBtn" class="btn-reset"></button>
+                <button id="clearDataBtn" class="btn-reset">Reset All Inputs</button>
             </div>
 
-            <!-- Real-time Summary Side Panel -->
-            <div class="card summary-container">
+            <!-- Real-time Summary Side Panel (Right Column) -->
+            <div class="card summary-container" id="printableArea">
                 <h2 id="lblSummaryTitle" class="card-title">📊 Summary</h2>
-
+                
                 <div class="summary-stats-wrapper">
                     <div class="stat-box">
-                        <span id="lblRatePerUnit"></span>
+                        <span id="lblRatePerUnit">Cost Per Unit</span>
                         <strong id="subRateResult">₹ 0.00 / kWh</strong>
                     </div>
-
                     <div class="stat-box">
-                        <span id="lblSubmeterUnits"></span>
+                        <span id="lblSubmeterUnits">Submeter Consumption</span>
                         <strong id="subUnitsResult">0 kWh</strong>
                     </div>
                 </div>
 
                 <div class="hero-box">
-                    <span id="lblTotalPayable"></span>
+                    <span id="lblTotalPayable">TOTAL PAYABLE</span>
                     <h2 id="subAmountResult">₹ 0.00</h2>
                     <small>Calculated in real-time</small>
                 </div>
+
+                <!-- Action Buttons (Inside Summary Column) -->
+                <div class="action-bar no-print">
+                    <button id="btnPrint" class="btn-action">🖨️ Print / Save PDF</button>
+                    <button id="btnShare" class="btn-action">📤 Share Summary</button>
+                </div>
             </div>
 
-        </div>
-
-        <!-- Actions Row (Print & Desktop/Mobile Share) -->
-        <div class="action-bar no-print">
-            <button id="btnPrint" class="btn-action">🖨️ Print / Save PDF</button>
-            <button id="btnShare" class="btn-action">📤 Share Summary</button>
         </div>
 
         <!-- Contrast Footer -->
         <footer class="app-footer">
             Electric Submeter Calculator © 2026. Built by /\/ Designz.
         </footer>
+
     </div>
 
     <!-- Application Initialization -->
