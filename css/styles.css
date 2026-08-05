@@ -163,14 +163,14 @@ body {
     display: grid;
     grid-template-columns: 1fr 400px;
     gap: 1.75rem;
-    align-items: stretch; /* Stretches both cards to match equal height */
+    align-items: stretch;
 }
 
 .card {
     background: var(--card-bg);
     border-radius: 20px;
     border: 1px solid var(--border-color);
-    padding: 2.25rem 2rem; /* Expanded vertical & horizontal padding */
+    padding: 2.25rem 2rem;
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
@@ -234,7 +234,7 @@ body {
     margin-top: auto;
 }
 
-/* AUTHENTIC RECEIPT SUMMARY COLUMN STYLING */
+/* AUTHENTIC CHECKOUT RECEIPT / CHALLAN STYLING */
 .summary-container {
     display: flex;
     flex-direction: column;
@@ -243,48 +243,64 @@ body {
     border: 2px dashed var(--border-color);
     border-radius: 20px;
     background: var(--receipt-bg);
+    padding: 1.75rem 1.5rem;
 }
 
-.summary-container .card-title {
-    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
-    font-size: 1.15rem;
-    letter-spacing: 0.08em;
+.receipt-header {
     text-align: center;
-    padding-bottom: 0.75rem;
     border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 0.85rem;
     margin-bottom: 0.5rem;
 }
 
-.summary-stats-wrapper {
+.receipt-header .card-title {
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.receipt-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+.receipt-breakdown {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.5rem;
 }
 
 .stat-box {
     background: transparent;
     border: none;
     border-bottom: 1px dotted var(--border-color);
-    border-radius: 0;
-    padding: 0.75rem 0;
+    padding: 0.55rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
+.stat-box.highlight-line {
+    border-bottom: 1px dashed var(--accent-blue);
+}
+
 .stat-box span {
     font-size: 0.8rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .stat-box strong {
-    font-size: 1.15rem;
+    font-size: 1rem;
     color: var(--text-primary);
     font-weight: 700;
-    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
 .hero-box {
@@ -318,6 +334,14 @@ body {
     display: block;
     font-size: 0.8rem;
     color: var(--hero-subtext);
+}
+
+.receipt-footer {
+    text-align: center;
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
 }
 
 /* STACKED ACTION BUTTONS INSIDE SUMMARY COLUMN */
@@ -391,22 +415,31 @@ body {
     }
 }
 
-/* PRINT OVERRIDES */
+/* PRINT OVERRIDES: PRINTS ONLY THE CHALLAN RECEIPT */
 @media print {
-    .no-print, .theme-select, .action-bar {
+    body * {
+        visibility: hidden !important;
+    }
+    
+    #printableArea, #printableArea * {
+        visibility: visible !important;
+    }
+    
+    #printableArea {
+        position: absolute !important;
+        left: 50% !important;
+        top: 20px !important;
+        transform: translateX(-50%) !important;
+        width: 100% !important;
+        max-width: 450px !important;
+        border: 2px dashed #000 !important;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        padding: 1.5rem !important;
+    }
+
+    .no-print {
         display: none !important;
-    }
-
-    body {
-        background: #ffffff;
-        color: #000000;
-        padding: 0;
-    }
-
-    .card, .stat-box, .app-header, .app-footer, .hero-box {
-        border: 1px solid #ccc;
-        box-shadow: none;
-        background: transparent;
-        color: #000000;
     }
 }
