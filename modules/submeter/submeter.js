@@ -19,35 +19,36 @@ export async function initApp() {
 
 function renderUIFromJSON(config) {
     document.title = config.title;
-    document.getElementById('appTitle').textContent = config.title;
-    document.getElementById('appSubtitle').textContent = config.subtitle;
-    document.getElementById('lblFormTitle').textContent = config.labels.formSectionTitle;
-    document.getElementById('lblSummaryTitle').textContent = config.labels.summarySectionTitle;
-    document.getElementById('lblNetBill').textContent = config.labels.netBill;
-    document.getElementById('lblMainUnits').textContent = config.labels.mainUnits;
-    document.getElementById('lblOldReading').textContent = config.labels.oldReading;
-    document.getElementById('lblNewReading').textContent = config.labels.newReading;
-    document.getElementById('lblRatePerUnit').textContent = config.labels.ratePerUnit;
-    document.getElementById('lblSubmeterUnits').textContent = config.labels.submeterUnits;
-    document.getElementById('lblTotalPayable').textContent = config.labels.totalPayable;
-    document.getElementById('clearDataBtn').textContent = config.labels.resetBtn;
     
-    document.getElementById('subNetBill').placeholder = config.placeholders.netBill;
-    document.getElementById('subMainUnits').placeholder = config.placeholders.mainUnits;
-    document.getElementById('subOldReading').placeholder = config.placeholders.oldReading;
-    document.getElementById('subNewReading').placeholder = config.placeholders.newReading;
+    if (document.getElementById('appTitle')) document.getElementById('appTitle').textContent = config.title;
+    if (document.getElementById('appSubtitle')) document.getElementById('appSubtitle').textContent = config.subtitle;
+    if (document.getElementById('lblFormTitle')) document.getElementById('lblFormTitle').textContent = config.labels.formSectionTitle;
+    if (document.getElementById('lblSummaryTitle')) document.getElementById('lblSummaryTitle').textContent = config.labels.summarySectionTitle;
+    if (document.getElementById('lblNetBill')) document.getElementById('lblNetBill').textContent = config.labels.netBill;
+    if (document.getElementById('lblMainUnits')) document.getElementById('lblMainUnits').textContent = config.labels.mainUnits;
+    if (document.getElementById('lblOldReading')) document.getElementById('lblOldReading').textContent = config.labels.oldReading;
+    if (document.getElementById('lblNewReading')) document.getElementById('lblNewReading').textContent = config.labels.newReading;
+    if (document.getElementById('lblRatePerUnit')) document.getElementById('lblRatePerUnit').textContent = config.labels.ratePerUnit;
+    if (document.getElementById('lblSubmeterUnits')) document.getElementById('lblSubmeterUnits').textContent = config.labels.submeterUnits;
+    if (document.getElementById('lblTotalPayable')) document.getElementById('lblTotalPayable').textContent = config.labels.totalPayable;
+    if (document.getElementById('clearDataBtn')) document.getElementById('clearDataBtn').textContent = config.labels.resetBtn;
+    
+    if (document.getElementById('subNetBill')) document.getElementById('subNetBill').placeholder = config.placeholders.netBill;
+    if (document.getElementById('subMainUnits')) document.getElementById('subMainUnits').placeholder = config.placeholders.mainUnits;
+    if (document.getElementById('subOldReading')) document.getElementById('subOldReading').placeholder = config.placeholders.oldReading;
+    if (document.getElementById('subNewReading')) document.getElementById('subNewReading').placeholder = config.placeholders.newReading;
 }
 
 function initThemeManager(config) {
     const themeSelect = document.getElementById('themeSelect');
     const systemQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // 1. Populate dropdown options from submeter.json cleanly
+    // 1. Clean theme options populate without repeating emojis
     if (themeSelect && config.themeOptions) {
         themeSelect.innerHTML = `
-            <option value="system">💻 ${config.themeOptions.system}</option>
-            <option value="light">☀️ ${config.themeOptions.light}</option>
-            <option value="dark">🌙 ${config.themeOptions.dark}</option>
+            <option value="system">${config.themeOptions.system}</option>
+            <option value="light">${config.themeOptions.light}</option>
+            <option value="dark">${config.themeOptions.dark}</option>
         `;
     }
 
@@ -57,17 +58,17 @@ function initThemeManager(config) {
         themeSelect.value = savedTheme;
     }
 
-    // Apply saved or system theme immediately
+    // Apply saved or system theme
     applyTheme(savedTheme);
 
-    // 3. Dropdown change event listener
+    // 3. Dropdown change listener
     themeSelect?.addEventListener('change', (e) => {
         const theme = e.target.value;
         localStorage.setItem(THEME_KEY, theme);
         applyTheme(theme);
     });
 
-    // 4. Live listener for system dark/light mode switches when 'system' is active
+    // 4. System appearance toggle listener
     systemQuery.addEventListener('change', () => {
         if ((localStorage.getItem(THEME_KEY) || 'system') === 'system') {
             applyTheme('system');
@@ -76,7 +77,7 @@ function initThemeManager(config) {
 }
 
 function applyTheme(theme) {
-    const root = document.documentElement; // <html> tag
+    const root = document.documentElement;
     if (theme === 'system') {
         const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         root.setAttribute('data-theme', isDark ? 'dark' : 'light');
@@ -117,8 +118,8 @@ function calculate() {
     const mainUnits = parseFloat(document.getElementById('subMainUnits')?.value) || 0;
     const oldReading = parseFloat(document.getElementById('subOldReading')?.value) || 0;
     const newReading = parseFloat(document.getElementById('subNewReading')?.value) || 0;
-    const errorBanner = document.getElementById('subErrorMsg');
 
+    const errorBanner = document.getElementById('subErrorMsg');
     let isValid = true;
     let errorText = '';
 
@@ -142,13 +143,25 @@ function calculate() {
     const consumedUnits = newReading >= oldReading ? newReading - oldReading : 0;
     const totalPayable = consumedUnits * rate;
 
+    // Sync values to the Right Column Receipt Panel
     const rateEl = document.getElementById('subRateResult');
     const unitsEl = document.getElementById('subUnitsResult');
     const amountEl = document.getElementById('subAmountResult');
 
+    const receiptNetBill = document.getElementById('receiptNetBill');
+    const receiptMainUnits = document.getElementById('receiptMainUnits');
+    const receiptOldReading = document.getElementById('receiptOldReading');
+    const receiptNewReading = document.getElementById('receiptNewReading');
+
     if (rateEl) rateEl.textContent = `₹ ${rate.toFixed(2)} / kWh`;
     if (unitsEl) unitsEl.textContent = `${consumedUnits.toFixed(2)} kWh`;
     if (amountEl) amountEl.textContent = `₹ ${totalPayable.toFixed(2)}`;
+
+    // Populate receipt breakdown line items
+    if (receiptNetBill) receiptNetBill.textContent = `₹ ${netBill.toFixed(2)}`;
+    if (receiptMainUnits) receiptMainUnits.textContent = `${mainUnits} kWh`;
+    if (receiptOldReading) receiptOldReading.textContent = oldReading;
+    if (receiptNewReading) receiptNewReading.textContent = newReading;
 }
 
 function saveData() {
@@ -166,10 +179,10 @@ function loadSavedData() {
     if (!saved) return;
     try {
         const data = JSON.parse(saved);
-        if (data.netBill) document.getElementById('subNetBill').value = data.netBill;
-        if (data.mainUnits) document.getElementById('subMainUnits').value = data.mainUnits;
-        if (data.oldReading) document.getElementById('subOldReading').value = data.oldReading;
-        if (data.newReading) document.getElementById('subNewReading').value = data.newReading;
+        if (data.netBill && document.getElementById('subNetBill')) document.getElementById('subNetBill').value = data.netBill;
+        if (data.mainUnits && document.getElementById('subMainUnits')) document.getElementById('subMainUnits').value = data.mainUnits;
+        if (data.oldReading && document.getElementById('subOldReading')) document.getElementById('subOldReading').value = data.oldReading;
+        if (data.newReading && document.getElementById('subNewReading')) document.getElementById('subNewReading').value = data.newReading;
     } catch (e) {
         console.error('Failed to parse stored calculator data', e);
     }
@@ -194,12 +207,12 @@ function initActions() {
                 });
                 canvas.toBlob(async (blob) => {
                     if (!blob) return;
-                    const file = new File([blob], 'submeter-summary.png', { type: 'image/png' });
+                    const file = new File([blob], 'electricity-challan-receipt.png', { type: 'image/png' });
                     if (navigator.canShare && navigator.canShare({ files: [file] })) {
                         await navigator.share({
                             files: [file],
-                            title: 'Submeter Electricity Summary',
-                            text: 'Here is the submeter bill calculation summary.'
+                            title: 'Electricity Submeter Challan Receipt',
+                            text: 'Here is the detailed submeter electricity settlement receipt.'
                         });
                     }
                 }, 'image/png');
