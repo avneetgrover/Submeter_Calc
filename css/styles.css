@@ -294,14 +294,19 @@ body {
 }
 
 .stat-box {
-    background: transparent;
-    border: none;
-    border-bottom: 1px dotted var(--border-color);
-    padding: 0.55rem 0;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 0.65rem 0.85rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+[data-theme="dark"] .stat-box {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .stat-box.highlight-line {
